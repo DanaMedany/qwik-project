@@ -10,6 +10,8 @@ export default component$(() => {
         <img
           src="https://leavetheherdbehind.com/cdn/shop/files/banner-darker.png?v=1683910923&width=2560"
           alt="coffee-image"
+          width={100}
+          height={100}
           class="h-screen w-full object-cover"
         />
 

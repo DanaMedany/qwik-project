@@ -1,4 +1,5 @@
-import { component$, useStore, useTask$, $ } from "@builder.io/qwik";
+import { component$, useStore, $, useVisibleTask$ } from "@builder.io/qwik";
+import { isServer } from "@builder.io/qwik/build";
 
 export default component$(() => {
   const state = useStore({
@@ -7,7 +8,7 @@ export default component$(() => {
 
   // Function to get coffee data
   const getCoffeeData = $(() => {
-    const storedData = localStorage.getItem("coffee");
+    const storedData = window.localStorage.getItem("coffee");
     console.log(storedData);
     try {
       return storedData ? JSON.parse(storedData) : null;
@@ -19,11 +20,15 @@ export default component$(() => {
 
   console.log(state.title);
 
-  useTask$(({ track }) => {
+  useVisibleTask$(({ track }) => {
     track(() => state.title);
-    console.log("getCoffeeData render");
-    const data = getCoffeeData();
-    state.title = data?.title;
+    const update = async () => {
+      const data = await getCoffeeData()!;
+      console.log(data);
+      state.title = data.title;
+    };
+
+    !isServer ? update() : null;
   });
 
   return <div class="text-black">{state.title || "No coffee selected"}</div>;

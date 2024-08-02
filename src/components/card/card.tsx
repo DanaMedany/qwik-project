@@ -26,6 +26,8 @@ export default component$((props: cardProps) => {
         <img
           src={image}
           alt={name}
+          width={100}
+          height={100}
           class="h-full w-full object-cover object-[top_center]"
         />
         <div class="absolute inset-0 flex flex-col justify-end bg-gray-800 bg-opacity-70 p-4 text-white opacity-0 transition-opacity duration-300 hover:opacity-100">
